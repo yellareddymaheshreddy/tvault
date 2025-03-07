@@ -60,7 +60,7 @@ export default function Home() {
   <div className="max-w-2xl mx-auto space-y-8">
     <header className="text-center space-y-4">
       <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100">
-        Text Share
+        T-Vault
       </h1>
       <div className="space-y-2">
         <p className="text-gray-600 dark:text-gray-400">
