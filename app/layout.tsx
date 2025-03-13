@@ -22,9 +22,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  verification: {
-    google: 'your-google-verification-code', // Replace with your Google Search Console verification code
-  }
 };
 
 export default function RootLayout({
@@ -35,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="canonical" href="https://tvault.mahs.me" /> {/* Replace with your actual domain */}
+        <link rel="canonical" href="https://tvault.mahs.me" /> 
       </head>
       <body className={` antialiased`}>
         {children}
