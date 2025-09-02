@@ -1,163 +1,360 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { KeyRound, Save, Search, ShieldCheck, AlertCircle } from 'lucide-react';
+import * as React from "react"
+import { KeyRound, Save, Search, ShieldCheck, AlertCircle, Link2, QrCode, Wand2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { KeyboardShortcuts } from "@/components/keyboard-shortcuts"
+import { CopyButton } from "@/components/copy-button"
+import { QRCodeSVG } from "qrcode.react"
+import { cn } from "@/lib/utils"
+
+type Status = { type: "success" | "error"; message: string } | null
 
 export default function Home() {
-  const [key, setKey] = useState('');
-  const [text, setText] = useState('');
-  const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false);
+  // Shared
+  const [tab, setTab] = React.useState<"text" | "url">("text")
+  const [shortcutsOpen, setShortcutsOpen] = React.useState(false)
+
+  // Text Vault
+  const keyRef = React.useRef<HTMLInputElement>(null)
+  const [key, setKey] = React.useState("")
+  const [text, setText] = React.useState("")
+  const [loading, setLoading] = React.useState(false)
+  const [status, setStatus] = React.useState<Status>(null)
+
+  // URL Shortener
+  const [url, setUrl] = React.useState("")
+  const [customKey, setCustomKey] = React.useState("")
+  const [shortCode, setShortCode] = React.useState<string | null>(null)
+
+  const shortUrl = React.useMemo(() => {
+    if (!shortCode) return ""
+    if (typeof window === "undefined") return ""
+    return `${window.location.origin}/u/${shortCode}`
+  }, [shortCode])
+
+  // Keyboard shortcuts (Ctrl+? or Ctrl+/; plus helpers)
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const isCtrl = e.ctrlKey || e.metaKey // support Cmd on macOS
+      const key = e.key
+
+      // Ctrl+? (Shift + /) or Ctrl+/
+      if (isCtrl && (key === "/" || key === "?")) {
+        e.preventDefault()
+        setShortcutsOpen(true)
+        return
+      }
+      if (!isCtrl) return
+
+      if (key === "1") {
+        e.preventDefault()
+        setTab("text")
+        return
+      }
+      if (key === "2") {
+        e.preventDefault()
+        setTab("url")
+        return
+      }
+      if (key.toLowerCase() === "k") {
+        e.preventDefault()
+        keyRef.current?.focus()
+        return
+      }
+      if (key.toLowerCase() === "s" && tab === "text") {
+        e.preventDefault()
+        void saveText()
+        return
+      }
+      if (key.toLowerCase() === "r" && tab === "text") {
+        e.preventDefault()
+        void retrieveText()
+        return
+      }
+      if (key.toLowerCase() === "l" && tab === "url") {
+        e.preventDefault()
+        void shorten()
+        return
+      }
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [tab, key, text, url, customKey]) // deps for latest state
 
   const saveText = async () => {
     try {
-      setLoading(true);
-      const response = await fetch('/api/text', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      setLoading(true)
+      setStatus(null)
+      const res = await fetch("/api/text", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ key, text }),
-      });
-
-      const data = await response.json();
-      
-      if (response.ok) {
-        setMessage('Text saved successfully!');
-        setText('');
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data?.error || "Failed to save text")
+      setStatus({ type: "success", message: "Text saved successfully!" })
+      // keep the text for quick edits; if you want to clear, uncomment:
+      // setText('')
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setStatus({ type: "error", message: e.message });
       } else {
-        setMessage(data.error || 'Failed to save text');
+        setStatus({ type: "error", message: "Error Saving text" });
       }
-    } catch (error) {
-      console.error(error);
-      setMessage('Error saving text');
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const retrieveText = async () => {
     try {
-      setLoading(true);
-      const response = await fetch(`/api/text?key=${encodeURIComponent(key)}`);
-      const data = await response.json();
-      
-      if (response.ok) {
-        setText(data.text);
-        setMessage('Text retrieved successfully!');
+      setLoading(true)
+      setStatus(null)
+      const res = await fetch(`/api/text?key=${encodeURIComponent(key)}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data?.error || "Failed to retrieve text")
+      setText(data.text || "")
+      setStatus({ type: "success", message: "Text retrieved successfully!" })
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setStatus({ type: "error", message: e.message });
       } else {
-        setMessage(data.error || 'Failed to retrieve text');
+        setStatus({ type: "error", message: "Error retrieving text" });
       }
-    } catch (error) {
-      console.error(error);
-      setMessage('Error retrieving text');
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
+  const shorten = async () => {
+    try {
+      setLoading(true)
+      setStatus(null)
+      const res = await fetch("/api/shorten", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url, key: customKey || undefined }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data?.error || "Failed to shorten URL")
+      setShortCode(data.code)
+      setStatus({ type: "success", message: "URL shortened successfully!" })
+    } catch (e: unknown) {
+      setShortCode(null)
+      if (e instanceof Error) {
+        setStatus({ type: "error", message: e.message });
+      } else {
+        setStatus({ type: "error", message: "Error retrieving text" });
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 p-4 md:p-8">
-      <div className="max-w-2xl mx-auto">
-        <header className="flex items-center justify-center mb-8 flex-col space-y-4">
+    <main className="min-h-screen p-6 md:p-10">
+      <div className="mx-auto max-w-3xl">
+        <header className="mb-8 flex flex-col items-center gap-4 text-center">
           <div className="flex items-center">
-            <ShieldCheck className="h-8 w-8 mr-2 text-blue-600 dark:text-blue-400" />
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-gray-100">T-Vault</h1>
+            <ShieldCheck className="mr-2 h-8 w-8 text-blue-600" aria-hidden />
+            <h1 className="text-balance text-3xl font-bold md:text-4xl">T‑Vault</h1>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 text-center">
-            Share text between your devices quickly and easily
+          <p className="max-w-xl text-pretty text-muted-foreground">
+            Share text between your devices and create short links with QR codes. Items auto-delete after 24 hours.
           </p>
-          <div className="bg-amber-100 dark:bg-amber-900/30 p-4 rounded-lg text-amber-800 dark:text-amber-200 text-sm w-full max-w-xl">
+          <div
+            className={cn("w-full max-w-2xl rounded-lg border p-4 text-sm", "bg-secondary text-secondary-foreground")}
+            role="note"
+          >
             <div className="flex items-center">
-              <AlertCircle className="h-4 w-4 mr-2" />
-              Quick, simple text sharing - perfect for notes and temporary messages. Use a unique key!
+              <AlertCircle className="mr-2 h-4 w-4" aria-hidden />
+              Use a unique key for quick access. Press Ctrl+? to view keyboard shortcuts.
             </div>
           </div>
         </header>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 space-y-6 border-2 border-gray-100 dark:border-gray-700">
-          <div className="space-y-2">
-            <label htmlFor="key" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Storage Key
-            </label>
-            <div className="relative">
-              <KeyRound className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
-              <input
-                id="key"
-                type="text"
-                value={key}
-                onChange={(e) => setKey(e.target.value)}
-                placeholder="Enter a unique key"
-                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 
-                  focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                  dark:bg-gray-700 dark:text-white transition-colors"
-              />
-            </div>
+        <Card className="border-2">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">Workspace</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Tabs value={tab} onValueChange={(v) => setTab(v as "text" | "url")} className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="text" aria-label="Text Vault">
+                  Text Vault
+                </TabsTrigger>
+                <TabsTrigger value="url" aria-label="URL Shortener">
+                  URL Shortener
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="text" className="mt-6">
+                <div className="grid gap-6">
+                  <div className="grid gap-2">
+                    <Label htmlFor="storage-key" className="text-sm font-medium">
+                      Storage Key
+                    </Label>
+                    <div className="relative">
+                      <KeyRound className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        id="storage-key"
+                        ref={keyRef}
+                        value={key}
+                        onChange={(e) => setKey(e.target.value)}
+                        placeholder="Enter a unique key"
+                        className="pl-9"
+                        aria-describedby="key-help"
+                      />
+                    </div>
+                    <p id="key-help" className="text-xs text-muted-foreground">
+                      This key is used to save and retrieve your text.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-2">
+                    <Label htmlFor="text-area" className="text-sm font-medium">
+                      Your Text
+                    </Label>
+                    <textarea
+                      id="text-area"
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      placeholder="Enter your text here..."
+                      className={cn(
+                        "min-h-[200px] resize-y rounded-md border bg-background px-3 py-2",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                      )}
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button onClick={saveText} disabled={loading || !key || !text} className="flex-1">
+                      <Save className="mr-2 h-4 w-4" aria-hidden />
+                      {loading ? "Saving…" : "Save Text"}
+                    </Button>
+                    <Button onClick={retrieveText} disabled={loading || !key} variant="secondary" className="flex-1">
+                      <Search className="mr-2 h-4 w-4" aria-hidden />
+                      {loading ? "Retrieving…" : "Retrieve Text"}
+                    </Button>
+                  </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="url" className="mt-6">
+                <div className="grid gap-6">
+                  <div className="grid gap-2">
+                    <Label htmlFor="url-input" className="text-sm font-medium">
+                      Long URL
+                    </Label>
+                    <div className="relative">
+                      <Link2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        id="url-input"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        placeholder="https://example.com/some/long/path"
+                        className="pl-9"
+                        inputMode="url"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-2">
+                    <Label htmlFor="custom-key" className="text-sm font-medium">
+                      Custom Key (optional)
+                    </Label>
+                    <Input
+                      id="custom-key"
+                      value={customKey}
+                      onChange={(e) => setCustomKey(e.target.value)}
+                      placeholder="letters, numbers, _ or -"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      If set, your short URL becomes /u/your-key. Otherwise a code will be generated.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button onClick={shorten} disabled={loading || !url} className="flex-1">
+                      <Wand2 className="mr-2 h-4 w-4" aria-hidden />
+                      {loading ? "Shortening…" : "Shorten URL"}
+                    </Button>
+                  </div>
+
+                  {shortCode && shortUrl && (
+                    <div className="grid gap-4 rounded-lg border p-4">
+                      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                        <div className="flex items-center gap-2">
+                          <QrCode className="h-5 w-5 text-blue-600" aria-hidden />
+                          <a
+                            href={shortUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-medium underline"
+                          >
+                            {shortUrl}
+                          </a>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <CopyButton text={shortUrl} />
+                          <Button asChild variant="secondary" aria-label="Open short URL in a new tab">
+                            <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+                              Open
+                            </a>
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="flex w-full justify-center">
+                        <div className="rounded-lg border bg-card p-3" aria-label="QR code for shortened URL">
+                          <QRCodeSVG
+                            value={shortUrl}
+                            size={160}
+                            bgColor="transparent"
+                            fgColor="currentColor"
+                            className="text-foreground"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+
+        {status && (
+          <div
+            className={cn(
+              "mt-6 flex items-center justify-center rounded-lg p-4 text-center",
+              status.type === "success"
+                ? "bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-200"
+                : "bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-200",
+            )}
+            role="status"
+            aria-live="polite"
+          >
+            {status.type === "success" ? (
+              <ShieldCheck className="mr-2 h-5 w-5" aria-hidden />
+            ) : (
+              <AlertCircle className="mr-2 h-5 w-5" aria-hidden />
+            )}
+            {status.message}
           </div>
+        )}
 
-          <div className="space-y-2">
-            <label htmlFor="text" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Your Text
-            </label>
-            <textarea
-              id="text"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Enter your text here..."
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600
-                focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                dark:bg-gray-700 dark:text-white transition-colors
-                min-h-[200px] resize-y field-sizing-content"
-            />
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
-              onClick={saveText}
-              disabled={loading || !key || !text}
-              className="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 
-                text-white font-medium rounded-lg transition-colors
-                disabled:opacity-50 disabled:cursor-not-allowed
-                flex items-center justify-center"
-            >
-              <Save className="h-5 w-5 mr-2" />
-              {loading ? 'Saving...' : 'Save Text'}
-            </button>
-
-            <button
-              onClick={retrieveText}
-              disabled={loading || !key}
-              className="flex-1 px-6 py-3 bg-green-600 hover:bg-green-700
-                text-white font-medium rounded-lg transition-colors
-                disabled:opacity-50 disabled:cursor-not-allowed
-                flex items-center justify-center"
-            >
-              <Search className="h-5 w-5 mr-2" />
-              {loading ? 'Retrieving...' : 'Retrieve Text'}
-            </button>
-          </div>
-
-          {message && (
-            <div className={`p-4 rounded-lg text-center flex items-center justify-center ${
-              message.includes('success') 
-                ? 'bg-green-100 text-green-800 dark:bg-green-800/20 dark:text-green-200'
-                : 'bg-red-100 text-red-800 dark:bg-red-800/20 dark:text-red-200'
-            }`}>
-              {message.includes('success') ? (
-                <ShieldCheck className="h-5 w-5 mr-2" />
-              ) : (
-                <AlertCircle className="h-5 w-5 mr-2" />
-              )}
-              {message}
-            </div>
-          )}
-        </div>
-
-        <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>All stored text is automatically deleted after 24 hours.</p>
-          <p className="mt-1">Please don&apos;t store sensitive information like passwords.</p>
-        </div>
+        <p className="mt-8 text-center text-sm text-muted-foreground">
+          All stored items are automatically deleted after 24 hours. Please don&apos;t store sensitive information.
+        </p>
       </div>
+
+      <KeyboardShortcuts open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
     </main>
-  );
+  )
 }
