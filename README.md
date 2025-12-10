@@ -24,6 +24,55 @@
 
 ---
 
+## 🌐 Additional Interfaces
+
+T-Vault provides multiple ways to access text and URL vaults across devices and workflows:
+
+### Repositories
+- **Mobile App (React Native)**  
+  [github.com/yellareddymaheshreddy/tvault-reactnative](https://github.com/yellareddymaheshreddy/tvault-reactnative)  
+  Cross-platform app (iOS/Android) for fast access to text vaults and short links.
+
+- **CLI Tool**  
+  [github.com/yellareddymaheshreddy/tvault-cli](https://github.com/yellareddymaheshreddy/tvault-cli)  
+  Command-line utility for developers, scripting, automation, and remote workflows.
+
+---
+
+### 🧰 CLI Installation & Usage
+
+**Installation**
+```bash
+npm install -g tvault-cli
+```
+
+**Commands**
+```bash
+# Store text
+tvault set <key> "Some text here"
+
+# Retrieve text
+tvault get <key>
+
+# Shorten a URL
+tvault short <url> --key optionalCustomAlias
+
+# View help
+tvault --help
+```
+
+---
+
+### 📊 Interface Comparison
+
+| Interface   | Platform      | Best For              | Highlights                                               | Installation             |
+|------------|---------------|----------------------|---------------------------------------------------------|-------------------------|
+| Web UI     | Browser       | General users        | Zero installation, keyboard shortcuts, responsive      | None                    |
+| Mobile App | iOS / Android | Cross-device access  | Offline support (optional), fast retrieval, share sheet integration | App Store / Google Play |
+| CLI        | Terminal      | Developers, automation | Fastest workflow, works over SSH, easy for CI/CD       | `npm i -g tvault-cli`   |
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
