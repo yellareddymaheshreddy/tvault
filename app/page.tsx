@@ -161,7 +161,7 @@ export default function Home() {
       <div className="mx-auto max-w-4xl">
         <header className="mb-10 flex flex-col items-center gap-5 text-center md:mb-12">
           <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
               <ShieldCheck className="h-8 w-8 text-white" aria-hidden />
             </div>
             <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">T-Vault</h1>
@@ -174,7 +174,7 @@ export default function Home() {
             role="note"
           >
             <div className="flex items-center justify-center gap-2 text-blue-900 dark:text-blue-200">
-              <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden />
+              <AlertCircle className="h-4 w-4 shrink-0" aria-hidden />
               <span>Use a unique key for quick access. Press <kbd className="rounded bg-blue-100 px-1.5 py-0.5 font-mono text-xs dark:bg-blue-900">Ctrl+?</kbd> for shortcuts.</span>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function Home() {
                       onChange={(e) => setText(e.target.value)}
                       placeholder="Paste or type your text here...&#10;&#10;• Code snippets&#10;• Notes&#10;• Messages&#10;• Anything you need to share"
                       className={cn(
-                        "min-h-[280px] resize-y rounded-lg border-2 bg-background px-4 py-3 text-base leading-relaxed md:min-h-[320px] md:text-lg",
+                        "min-h-[280px] resize-y rounded-lg border-2 bg-background px-4 py-3 text-base leading-relaxed md:min-h-80 md:text-lg",
                         "placeholder:text-muted-foreground/60",
                         "focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10",
                       )}
@@ -379,36 +379,36 @@ export default function Home() {
             aria-live="polite"
           >
             {status.type === "success" ? (
-              <ShieldCheck className="h-6 w-6 flex-shrink-0" aria-hidden />
+              <ShieldCheck className="h-6 w-6 shrink-0" aria-hidden />
             ) : (
-              <AlertCircle className="h-6 w-6 flex-shrink-0" aria-hidden />
+              <AlertCircle className="h-6 w-6 shrink-0" aria-hidden />
             )}
             <span className="text-base md:text-lg">{status.message}</span>
           </div>
         )}
 
-        <Card className="mt-10 border-2 bg-gradient-to-br from-secondary/30 to-secondary/10 shadow-lg md:mt-12">
+        <Card className="mt-10 border-2 bg-linear-to-br from-secondary/30 to-secondary/10 shadow-lg md:mt-12">
           <CardHeader className="pb-6">
             <CardTitle className="text-center text-xl md:text-2xl">Why Choose T-Vault?</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-6 md:grid-cols-3 md:gap-8">
               <div className="space-y-3 rounded-xl bg-background/50 p-5 text-center transition-all hover:bg-background/80 hover:shadow-md">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
                   <KeyRound className="h-7 w-7 text-white" aria-hidden />
                 </div>
                 <p className="text-lg font-semibold text-foreground">No Login</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">Just enter a key and start sharing—no account needed.</p>
               </div>
               <div className="space-y-3 rounded-xl bg-background/50 p-5 text-center transition-all hover:bg-background/80 hover:shadow-md">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-green-600 shadow-lg shadow-green-500/30">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-green-500 to-green-600 shadow-lg shadow-green-500/30">
                   <ShieldCheck className="h-7 w-7 text-white" aria-hidden />
                 </div>
                 <p className="text-lg font-semibold text-foreground">Auto-Delete</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">All data is removed after 24 hours automatically.</p>
               </div>
               <div className="space-y-3 rounded-xl bg-background/50 p-5 text-center transition-all hover:bg-background/80 hover:shadow-md">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/30">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/30">
                   <QrCode className="h-7 w-7 text-white" aria-hidden />
                 </div>
                 <p className="text-lg font-semibold text-foreground">QR Codes</p>

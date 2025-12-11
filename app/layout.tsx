@@ -52,8 +52,7 @@ export default function RootLayout({
 
               <nav className="flex items-center gap-2 text-sm text-muted-foreground md:gap-4">
                 <Link href="/about" className="hidden hover:text-foreground sm:inline">About</Link>
-                <Link href="/privacy" className="hidden hover:text-foreground md:inline">Privacy</Link>
-                <Link href="/terms" className="hidden hover:text-foreground md:inline">Terms</Link>
+                <Link href="/apps" className="hover:text-foreground">Apps</Link>
                 <Link href="/settings" className="hover:text-foreground">Settings</Link>
                 <a
                   href="https://github.com/yellareddymaheshreddy/tvault"
@@ -72,7 +71,6 @@ export default function RootLayout({
           <div className="mx-auto max-w-5xl px-4 pb-12 pt-6 md:px-6 md:pt-10">
             {children}
           </div>
-
           <footer className="border-t bg-background/80 py-8 text-sm text-muted-foreground backdrop-blur">
             <div className="mx-auto max-w-5xl px-4 md:px-6">
               <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
@@ -106,6 +104,12 @@ export default function RootLayout({
                     <Link href="/settings" className="hover:text-foreground">Settings</Link>
                   </div>
                 </div>
+
+              </div>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+                <span className="text-muted-foreground/50">•</span>
+                <Link href="/terms" className="hover:text-foreground">Terms</Link>
               </div>
             </div>
           </footer>
