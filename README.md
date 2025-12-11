@@ -24,6 +24,46 @@
 
 ---
 
+## 📱 Ecosystem & Tools
+
+TVault is available wherever you work. Choose the interface that fits your workflow:
+
+| Platform | 🌐 Web App | 💻 CLI Tool | 📱 Mobile App |
+| :--- | :---: | :---: | :---: |
+| **Best For** | Quick sharing (No install) | Developers & Terminal usage | On-the-go access |
+| **Interface** | Next.js Website | Command Line | React Native (Expo) |
+| **Install** | None | `npm i -g tvault-cli` | Download / Clone |
+| **Link** | [Launch Web](https://tvault.mahs.me) | [View CLI Repo](https://github.com/yellareddymaheshreddy/tvault-cli) | [View App Repo](https://github.com/yellareddymaheshreddy/tvault-reactnative) |
+
+### 🖥️ CLI Tool
+
+The official command-line interface for TVault.
+
+**Installation:**
+```bash
+npm i -g tvault-cli
+```
+
+**Usage:**
+```bash
+tvault shorten <url>   # Shorten a URL
+tvault store "hello"   # Store text securely
+tvault get <key>       # Retrieve data
+```
+
+[View full CLI documentation](https://github.com/yellareddymaheshreddy/tvault-cli)
+
+### 📱 Mobile App
+
+The official React Native client (Expo) for Android and iOS.
+
+- **Features:** Anonymous storage, Auto-expiry, QR Code support.
+- **Tech Stack:** React Native, Expo, NativeWind.
+
+[View Mobile App Repository](https://github.com/yellareddymaheshreddy/tvault-reactnative)
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites
