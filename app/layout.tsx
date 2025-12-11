@@ -73,23 +73,39 @@ export default function RootLayout({
             {children}
           </div>
 
-          <footer className="border-t bg-background/80 py-6 text-sm text-muted-foreground backdrop-blur">
-            <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between md:px-6">
-              <div className="flex items-center gap-2 text-foreground">
-                <ShieldCheck className="h-4 w-4 text-blue-600" aria-hidden />
-                <span className="font-semibold">T-Vault</span>
-                <span className="ml-2 text-xs text-muted-foreground">© 2025</span>
-              </div>
-              <div className="flex flex-wrap items-center gap-3 md:gap-4">
-                <Link href="/" className="hover:text-foreground">Home</Link>
-                <Link href="/about" className="hover:text-foreground">About</Link>
-                <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
-                <Link href="/terms" className="hover:text-foreground">Terms</Link>
-                <Link href="/settings" className="hover:text-foreground">Settings</Link>
-                <a href="https://github.com/yellareddymaheshreddy/tvault" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-foreground">
-                  <Github className="h-4 w-4" aria-hidden />
-                  <span>GitHub</span>
-                </a>
+          <footer className="border-t bg-background/80 py-8 text-sm text-muted-foreground backdrop-blur">
+            <div className="mx-auto max-w-5xl px-4 md:px-6">
+              <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+                {/* Branding */}
+                <div className="flex items-center gap-2 text-foreground">
+                  <ShieldCheck className="h-4 w-4 text-blue-600" aria-hidden />
+                  <span className="font-semibold">T-Vault</span>
+                  <span className="ml-2 text-xs text-muted-foreground">© 2025</span>
+                </div>
+
+                {/* Two-column link grid */}
+                <div className="grid grid-cols-2 gap-8 sm:gap-12">
+                  {/* Column 1: Development */}
+                  <div className="flex flex-col gap-2">
+                    <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-foreground">Development</span>
+                    <a href="https://github.com/yellareddymaheshreddy/tvault" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-foreground">
+                      <Github className="h-4 w-4" aria-hidden />
+                      <span>GitHub</span>
+                    </a>
+                    <a href="https://github.com/yellareddymaheshreddy/tvault-cli" target="_blank" rel="noreferrer" className="hover:text-foreground">CLI</a>
+                    <a href="https://github.com/yellareddymaheshreddy/tvault-reactnative" target="_blank" rel="noreferrer" className="hover:text-foreground">Mobile App</a>
+                  </div>
+
+                  {/* Column 2: Legal & Pages */}
+                  <div className="flex flex-col gap-2">
+                    <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-foreground">Legal & Pages</span>
+                    <Link href="/" className="hover:text-foreground">Home</Link>
+                    <Link href="/about" className="hover:text-foreground">About</Link>
+                    <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+                    <Link href="/terms" className="hover:text-foreground">Terms</Link>
+                    <Link href="/settings" className="hover:text-foreground">Settings</Link>
+                  </div>
+                </div>
               </div>
             </div>
           </footer>
