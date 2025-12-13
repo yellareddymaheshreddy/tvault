@@ -9,17 +9,27 @@ export function CopyButton({ text, className }: { text: string; className?: stri
   return (
     <Button
       type="button"
-      variant="secondary"
+      variant="default"
+      size="lg"
       className={className}
       aria-label="Copy to clipboard"
       onClick={async () => {
         await navigator.clipboard.writeText(text)
         setCopied(true)
-        setTimeout(() => setCopied(false), 1500)
+        setTimeout(() => setCopied(false), 2000)
       }}
     >
-      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-      <span className="sr-only">{copied ? "Copied" : "Copy"}</span>
+      {copied ? (
+        <>
+          <Check className="mr-2 h-5 w-5" aria-hidden />
+          Copied!
+        </>
+      ) : (
+        <>
+          <Copy className="mr-2 h-5 w-5" aria-hidden />
+          Copy Link
+        </>
+      )}
     </Button>
   )
 }
