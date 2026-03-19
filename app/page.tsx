@@ -159,28 +159,26 @@ export default function Home() {
   return (
     <>
       <div className="mx-auto max-w-4xl">
-        <header className="mb-10 flex flex-col items-center gap-5 text-center md:mb-12">
+        <header className="mb-10 flex flex-col items-center gap-4 text-center md:mb-12">
           <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
-              <ShieldCheck className="h-8 w-8 text-white" aria-hidden />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md">
+              <ShieldCheck className="h-6 w-6" aria-hidden />
             </div>
-            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">T-Vault</h1>
+            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl">T-Vault</h1>
           </div>
           <p className="max-w-2xl text-balance text-base text-muted-foreground md:text-lg">
             Share text across devices and create short links with QR codes. No login required. All items auto-delete after 24 hours for your privacy.
           </p>
           <div
-            className={cn("w-full max-w-2xl rounded-xl border border-blue-200 bg-blue-50/50 p-4 text-sm dark:border-blue-900 dark:bg-blue-950/20")}
+            className={cn("w-full max-w-2xl rounded-lg border bg-muted/40 p-3 text-sm text-muted-foreground flex items-center justify-center gap-2")}
             role="note"
           >
-            <div className="flex items-center justify-center gap-2 text-blue-900 dark:text-blue-200">
-              <AlertCircle className="h-4 w-4 shrink-0" aria-hidden />
-              <span>Use a unique key for quick access. Press <kbd className="rounded bg-blue-100 px-1.5 py-0.5 font-mono text-xs dark:bg-blue-900">Ctrl+?</kbd> for shortcuts.</span>
-            </div>
+            <AlertCircle className="h-4 w-4 shrink-0" aria-hidden />
+            <span>Use a unique key for quick access. Press <kbd className="rounded border bg-background px-1.5 py-0.5 font-mono text-xs shadow-sm">Ctrl+?</kbd> for shortcuts.</span>
           </div>
         </header>
 
-        <Card className="border-2 shadow-lg">
+        <Card className="border-2 shadow-sm">
           <CardHeader className="border-b bg-muted/30 pb-4">
             <CardTitle className="text-xl font-semibold">Workspace</CardTitle>
           </CardHeader>
@@ -228,9 +226,9 @@ export default function Home() {
                       onChange={(e) => setText(e.target.value)}
                       placeholder="Paste or type your text here...&#10;&#10;• Code snippets&#10;• Notes&#10;• Messages&#10;• Anything you need to share"
                       className={cn(
-                        "min-h-[280px] resize-y rounded-lg border-2 bg-background px-4 py-3 text-base leading-relaxed md:min-h-80 md:text-lg",
+                        "min-h-[280px] resize-y rounded-md border bg-background px-4 py-3 text-base leading-relaxed md:min-h-80 md:text-lg shadow-inner",
                         "placeholder:text-muted-foreground/60",
-                        "focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-500/10",
+                        "focus-visible:border-blue-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500",
                       )}
                     />
                     <p className="text-sm text-muted-foreground">
@@ -387,29 +385,29 @@ export default function Home() {
           </div>
         )}
 
-        <Card className="mt-10 border-2 bg-linear-to-br from-secondary/30 to-secondary/10 shadow-lg md:mt-12">
+        <Card className="mt-10 border shadow-sm md:mt-12 bg-muted/10">
           <CardHeader className="pb-6">
             <CardTitle className="text-center text-xl md:text-2xl">Why Choose T-Vault?</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-6 md:grid-cols-3 md:gap-8">
-              <div className="space-y-3 rounded-xl bg-background/50 p-5 text-center transition-all hover:bg-background/80 hover:shadow-md">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
-                  <KeyRound className="h-7 w-7 text-white" aria-hidden />
+              <div className="space-y-3 rounded-xl border bg-background p-5 text-center transition-all hover:shadow-md">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                  <KeyRound className="h-6 w-6" aria-hidden />
                 </div>
                 <p className="text-lg font-semibold text-foreground">No Login</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">Just enter a key and start sharing—no account needed.</p>
               </div>
-              <div className="space-y-3 rounded-xl bg-background/50 p-5 text-center transition-all hover:bg-background/80 hover:shadow-md">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-green-500 to-green-600 shadow-lg shadow-green-500/30">
-                  <ShieldCheck className="h-7 w-7 text-white" aria-hidden />
+              <div className="space-y-3 rounded-xl border bg-background p-5 text-center transition-all hover:shadow-md">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">
+                  <ShieldCheck className="h-6 w-6" aria-hidden />
                 </div>
                 <p className="text-lg font-semibold text-foreground">Auto-Delete</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">All data is removed after 24 hours automatically.</p>
               </div>
-              <div className="space-y-3 rounded-xl bg-background/50 p-5 text-center transition-all hover:bg-background/80 hover:shadow-md">
-                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-purple-500 to-purple-600 shadow-lg shadow-purple-500/30">
-                  <QrCode className="h-7 w-7 text-white" aria-hidden />
+              <div className="space-y-3 rounded-xl border bg-background p-5 text-center transition-all hover:shadow-md">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
+                  <QrCode className="h-6 w-6" aria-hidden />
                 </div>
                 <p className="text-lg font-semibold text-foreground">QR Codes</p>
                 <p className="text-sm leading-relaxed text-muted-foreground">Instantly generate QR codes for your short URLs.</p>
@@ -418,7 +416,7 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        <div className="mt-8 rounded-xl border-2 border-amber-200 bg-amber-50/50 px-5 py-4 text-center text-sm leading-relaxed text-amber-900 dark:border-amber-900 dark:bg-amber-950/20 dark:text-amber-100 md:text-base">
+        <div className="mt-8 rounded-lg border bg-amber-50 px-5 py-4 text-center text-sm leading-relaxed text-amber-900 shadow-sm dark:border-amber-900 dark:bg-amber-950/20 dark:text-amber-100 md:text-base">
           <strong>⏰ Auto-Deletion:</strong> All stored items are automatically deleted after 24 hours. Please don&apos;t store sensitive information.
         </div>
       </div>

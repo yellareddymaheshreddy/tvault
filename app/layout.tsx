@@ -51,9 +51,9 @@ export default function RootLayout({
               </Link>
 
               <nav className="flex items-center gap-2 text-sm text-muted-foreground md:gap-4">
+                <Link href="/" className="hover:text-foreground">Vault</Link>
+                <Link href="/active" className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">Active</Link>
                 <Link href="/about" className="hidden hover:text-foreground sm:inline">About</Link>
-                <Link href="/apps" className="hover:text-foreground">Apps</Link>
-                <Link href="/settings" className="hover:text-foreground">Settings</Link>
                 <a
                   href="https://github.com/yellareddymaheshreddy/tvault"
                   className="inline-flex items-center gap-1 rounded-md border px-2 py-1.5 text-xs font-medium text-foreground shadow-sm transition hover:-translate-y-0.5 hover:shadow-md md:px-3"
