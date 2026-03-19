@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import type { Metadata } from "next";
 import { Github, ShieldCheck } from "lucide-react";
 
@@ -38,6 +39,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="canonical" href="https://tvault.mahs.me" /> 
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4581670332384636`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </head>
       <body className="antialiased">
         <div className="relative min-h-screen bg-linear-to-b from-slate-50 via-white to-slate-50 text-foreground dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
