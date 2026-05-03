@@ -11,12 +11,13 @@ import { KeyboardShortcuts } from "@/components/keyboard-shortcuts"
 import { CopyButton } from "@/components/copy-button"
 import { QRCodeSVG } from "qrcode.react"
 import { cn } from "@/lib/utils"
+import { QrGenerator } from "@/components/QrGenerator"
 
 type Status = { type: "success" | "error"; message: string } | null
 
 export default function Home() {
   // Shared
-  const [tab, setTab] = React.useState<"text" | "url">("text")
+  const [tab, setTab] = React.useState<"text" | "url" | "qr">("qr")
   const [shortcutsOpen, setShortcutsOpen] = React.useState(false)
 
   // Text Vault
@@ -131,6 +132,11 @@ export default function Home() {
         setTab("url")
         return
       }
+      if (key === "3") {
+        e.preventDefault()
+        setTab("qr")
+        return
+      }
       if (key.toLowerCase() === "k") {
         e.preventDefault()
         keyRef.current?.focus()
@@ -183,13 +189,16 @@ export default function Home() {
             <CardTitle className="text-xl font-semibold">Workspace</CardTitle>
           </CardHeader>
           <CardContent className="p-6 md:p-8">
-            <Tabs value={tab} onValueChange={(v) => setTab(v as "text" | "url")} className="w-full">
-              <TabsList className="grid h-11 w-full grid-cols-2 p-1">
+            <Tabs value={tab} onValueChange={(v) => setTab(v as "text" | "url" | "qr")} className="w-full">
+              <TabsList className="grid h-11 w-full grid-cols-3 p-1">
                 <TabsTrigger value="text" aria-label="Text Vault" className="text-sm font-medium md:text-base">
                   📝 Text Vault
                 </TabsTrigger>
                 <TabsTrigger value="url" aria-label="URL Shortener" className="text-sm font-medium md:text-base">
                   🔗 URL Shortener
+                </TabsTrigger>
+                <TabsTrigger value="qr" aria-label="QR Generator" className="text-sm font-medium md:text-base">
+                  📱 QR Generator
                 </TabsTrigger>
               </TabsList>
 
@@ -360,6 +369,10 @@ export default function Home() {
                     </div>
                   )}
                 </div>
+              </TabsContent>
+
+              <TabsContent value="qr" className="mt-8">
+                <QrGenerator />
               </TabsContent>
             </Tabs>
           </CardContent>
