@@ -7,7 +7,7 @@
 
 **T-Vault** is a minimalist Next.js web app that enables quick, no-login sharing of text and URLs via unique keys. Perfect for passing code snippets, notes, or short links between devices—especially useful in exam scenarios or when you need fast cross-device access. All data is stored in Redis Cloud and automatically expires after 24 hours.
 
-🔗 **Live Demo:** [https://tvault.mahs.me](https://tvault.mahs.me)  
+🔗 **Live Demo:** [https://tsvault.vercel.app](https://tsvault.vercel.app)  
 📦 **Repository:** [github.com/yellareddymaheshreddy/tvault](https://github.com/yellareddymaheshreddy/tvault)  
 📖 **API Docs:** [API.md](API.md)
 
@@ -33,7 +33,7 @@ TVault is available wherever you work. Choose the interface that fits your workf
 | **Best For** | Quick sharing (No install) | Developers & Terminal usage | On-the-go access |
 | **Interface** | Next.js Website | Command Line | React Native (Expo) |
 | **Install** | None | `npm i -g tvault-cli` | Download / Clone |
-| **Link** | [Launch Web](https://tvault.mahs.me) | [View CLI Repo](https://github.com/yellareddymaheshreddy/tvault-cli) | [View App Repo](https://github.com/yellareddymaheshreddy/tvault-reactnative) |
+| **Link** | [Launch Web](https://tsvault.vercel.app) | [View CLI Repo](https://github.com/yellareddymaheshreddy/tvault-cli) | [View App Repo](https://github.com/yellareddymaheshreddy/tvault-reactnative) |
 
 ### 🖥️ CLI Tool
 
@@ -192,8 +192,8 @@ Press **Ctrl+?** (or **Ctrl+/**) to view all shortcuts:
 
 ## 🛡️ Privacy & Terms
 
-- **Privacy Policy**: [/privacy](https://tvault.mahs.me/privacy) — Details how data is stored and auto-deleted.
-- **Terms of Service**: [/terms](https://tvault.mahs.me/terms) — Guidelines for acceptable use.
+- **Privacy Policy**: [/privacy](https://tsvault.vercel.app/privacy) — Details how data is stored and auto-deleted.
+- **Terms of Service**: [/terms](https://tsvault.vercel.app/terms) — Guidelines for acceptable use.
 
 > ⚠️ **Important:** Data is stored in **plain text** on Redis Cloud. Do not store passwords, personal information, or anything sensitive.
 

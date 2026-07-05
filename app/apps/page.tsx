@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 
 const WEB_REPO = "https://github.com/yellareddymaheshreddy/tvault"
-const WEB_LIVE = "https://tvault.mahs.me"
+const WEB_LIVE = "https://tsvault.vercel.app"
 const APK_URL = "https://github.com/yellareddymaheshreddy/tvault-reactnative/releases/download/v1.0.0/tvault-v1.0.0.apk"
 const MOBILE_REPO = "https://github.com/yellareddymaheshreddy/tvault-reactnative"
 const CLI_REPO = "https://github.com/yellareddymaheshreddy/tvault-cli"

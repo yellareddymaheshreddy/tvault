@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'T-Vault - Temporary Text & URL Sharing',
   description: 'Share text and URLs instantly without login. Auto-delete after 24 hours. Perfect for cross-device sharing, QR codes, and quick links. No tracking, no ads.',
   keywords: 'temporary text storage, url shortener, qr code generator, no login sharing, ephemeral messages, text vault, pastebin alternative',
-  metadataBase: new URL('https://tvault.mahs.me'), 
+  metadataBase: new URL('https://tsvault.vercel.app'), 
   openGraph: {
     title: 'T-Vault - Temporary Text & URL Sharing',
     description: 'Share text and URLs instantly without login. Auto-delete after 24 hours.',
@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="canonical" href="https://tvault.mahs.me" /> 
+        <link rel="canonical" href="https://tsvault.vercel.app" /> 
         <Script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4581670332384636`}

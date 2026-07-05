@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://tvault.mahs.me/sitemap.xml 
+Sitemap: https://tsvault.vercel.app/sitemap.xml 

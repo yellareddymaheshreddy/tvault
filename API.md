@@ -5,7 +5,7 @@ T-Vault provides simple REST API endpoints for text storage and URL shortening.
 ## Base URL
 
 ```
-Production: https://tvault.mahs.me
+Production: https://tsvault.vercel.app
 Local Dev:  http://localhost:3000
 ```
 
@@ -42,7 +42,7 @@ Local Dev:  http://localhost:3000
 
 **Example (curl):**
 ```bash
-curl -X POST https://tvault.mahs.me/api/text \
+curl -X POST https://tsvault.vercel.app/api/text \
   -H "Content-Type: application/json" \
   -d '{"key":"test123","text":"My secret message"}'
 ```
@@ -70,7 +70,7 @@ curl -X POST https://tvault.mahs.me/api/text \
 
 **Example (curl):**
 ```bash
-curl https://tvault.mahs.me/api/text?key=test123
+curl https://tsvault.vercel.app/api/text?key=test123
 ```
 
 ### Short Alias for Retrieval
@@ -81,7 +81,7 @@ This is a shorthand for text retrieval.
 
 **Example:**
 ```bash
-curl https://tvault.mahs.me/api/t/test123
+curl https://tsvault.vercel.app/api/t/test123
 ```
 
 ---
@@ -117,12 +117,12 @@ curl https://tvault.mahs.me/api/t/test123
 **Example (curl):**
 ```bash
 # Auto-generated code
-curl -X POST https://tvault.mahs.me/api/shorten \
+curl -X POST https://tsvault.vercel.app/api/shorten \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com/long/path"}'
 
 # Custom code
-curl -X POST https://tvault.mahs.me/api/shorten \
+curl -X POST https://tsvault.vercel.app/api/shorten \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com/long/path","key":"mylink"}'
 ```
@@ -135,7 +135,7 @@ Redirects to the original URL.
 
 **Example:**
 ```
-https://tvault.mahs.me/u/short
+https://tsvault.vercel.app/u/short
 → Redirects to: https://example.com/very/long/path
 ```
 
@@ -188,7 +188,7 @@ Currently, there are no official SDKs. You can use any HTTP client:
 
 ### JavaScript/TypeScript
 ```typescript
-const response = await fetch('https://tvault.mahs.me/api/text', {
+const response = await fetch('https://tsvault.vercel.app/api/text', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ key: 'mykey', text: 'Hello' })
@@ -200,7 +200,7 @@ const data = await response.json();
 ```python
 import requests
 
-response = requests.post('https://tvault.mahs.me/api/text', json={
+response = requests.post('https://tsvault.vercel.app/api/text', json={
     'key': 'mykey',
     'text': 'Hello'
 })
@@ -219,7 +219,7 @@ body, _ := json.Marshal(map[string]string{
     "key":  "mykey",
     "text": "Hello",
 })
-resp, _ := http.Post("https://tvault.mahs.me/api/text", "application/json", bytes.NewBuffer(body))
+resp, _ := http.Post("https://tsvault.vercel.app/api/text", "application/json", bytes.NewBuffer(body))
 ```
 
 ---
